@@ -1,5 +1,5 @@
 from sqlalchemy import Column, DateTime, ForeignKey, String, Table, func
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 from .base import Base
 from .mixins import NotNull
@@ -9,13 +9,6 @@ quiz_teams = Table(
     Base.metadata,
     Column("quiz_id", ForeignKey("quiz.id")),
     Column("team_id", ForeignKey("team.id")),
-)
-
-quiz_questions = Table(
-    "quiz_questions",
-    Base.metadata,
-    Column("quiz_id", ForeignKey("quiz.id")),
-    Column("question_id", ForeignKey("questions.id")),
 )
 
 
@@ -29,9 +22,4 @@ class Quiz(Base):
     teams_registered = relationship(
         "Team", secondary=quiz_teams, back_populates="quizes", cascade="all"
     )
-    questions = relationship(
-        "Question",
-        secondary=quiz_questions,
-        cascade="all, delete-orphan",
-        single_parent=True,
-    )
+    questions = relationship("Question", backref=backref("quiz", lazy="joined"), cascade="all")

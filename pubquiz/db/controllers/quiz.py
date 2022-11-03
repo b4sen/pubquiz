@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from pubquiz.db.models import Quiz
 from pubquiz import schemas
+from pubquiz.db.models import Quiz
 
 
 def get_quizes(db: Session, limit: int = 0, offset: int = 0):
@@ -18,4 +18,11 @@ def create_quiz(db: Session, quiz: schemas.QuizCreate):
     db.add(db_quiz)
     db.commit()
     db.refresh(db_quiz)
+    return db_quiz
+
+
+def delete_quiz(db: Session, id: int):
+    db_quiz = db.query(Quiz).get(id)
+    db.delete(db_quiz)
+    db.commit()
     return db_quiz
