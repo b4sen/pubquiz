@@ -10,7 +10,7 @@ class Team(BaseModel):
     captain_name: str
     hash: str
     members: list[MemberBase]
-    quizes: list[Quiz]
+    quizes: list
 
     class Config:
         orm_mode = True
