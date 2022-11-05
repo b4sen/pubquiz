@@ -7,6 +7,7 @@ from .team import Team, TeamCreate
 __all__ = [
     "Quiz",
     "QuizCreate",
+    "QuizEdit",
     "Question",
     "QuestionCreate",
     "QuestionUpdate",
@@ -14,4 +15,6 @@ __all__ = [
     "TeamCreate",
     "MemberBase",
     "MemberCreate",
+    "MemberDelete",
+    "Member",
 ]

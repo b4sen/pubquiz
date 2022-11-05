@@ -27,6 +27,7 @@ def create_team(db: Session, team: schemas.TeamCreate):
     db.refresh(db_team)
     return db_team
 
+
 # this gets exposed to the user
 def add_member(db: Session, hash: str, member: schemas.MemberCreate):
     db_team = db.query(Team).where(Team.hash == hash).first()

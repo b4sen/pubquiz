@@ -3,6 +3,17 @@ from datetime import datetime
 from pydantic import BaseModel
 
 from .question import Question
+from .member import MemberBase
+
+
+class QuizTeam(BaseModel):
+    id: int
+    team_name: str
+    captain_name: str
+    members: list[MemberBase] | None = []
+
+    class Config:
+        orm_mode = True
 
 
 class Quiz(BaseModel):
@@ -10,7 +21,7 @@ class Quiz(BaseModel):
     quiz_name: str
     starts_at: datetime
     ends_at: datetime | None = None
-    teams_registered: list | None = []
+    teams_registered: list[QuizTeam] | None = []
     questions: list[Question] | None = []
 
     class Config:
