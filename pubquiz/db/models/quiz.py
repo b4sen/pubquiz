@@ -20,6 +20,6 @@ class Quiz(Base):
     starts_at = NotNull(DateTime)
     ends_at = Column(DateTime)
     teams_registered = relationship(
-        "Team", secondary=quiz_teams, back_populates="quizes", cascade="all"
+        "Team", secondary=quiz_teams, back_populates="quizes"
     )
     questions = relationship("Question", backref=backref("quiz", lazy="joined"), cascade="all")

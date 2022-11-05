@@ -16,3 +16,15 @@ def create_question(question: schemas.QuestionCreate, db: Session = Depends(get_
 @router.get("/{question_id}", response_model=schemas.Question | None)
 def get_question(question_id: int, db: Session = Depends(get_db)):
     return qc.get_question(db, question_id)
+
+
+@router.delete("/{question_id}", response_model=schemas.Question | None)
+def delete_question(question_id: int, db: Session = Depends(get_db)):
+    return qc.delete_question(db, question_id)
+
+
+@router.put("/{question_id}", response_model=schemas.Question | None)
+def update_question(
+    question_id: int, question: schemas.QuestionUpdate, db: Session = Depends(get_db)
+):
+    return qc.update_question(db, question, question_id)

@@ -21,3 +21,9 @@ class QuizCreate(BaseModel):
     quiz_name: str
     starts_at: datetime
     ends_at: datetime | None = None
+
+
+class QuizEdit(BaseModel):
+    quiz_name: str | None = None
+    starts_at: datetime | None = None
+    ends_at: datetime | None = None

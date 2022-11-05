@@ -5,6 +5,7 @@ from .base import Base
 from .mixins import NotNull
 from .quiz import quiz_teams
 
+# TODO: remove, unused
 assoc_table = Table(
     "team_members",
     Base.metadata,
@@ -18,10 +19,22 @@ class Team(Base):
     __tablename__ = "team"
 
     team_name = NotNull(String, unique=True)
-    captain_id = NotNull(Integer, ForeignKey("member.id"))
+    captain_name = NotNull(String)
+    hash = NotNull(String)
     members = relationship(
-        "Member", secondary=assoc_table, back_populates="teams", cascade="all"
+        "Member",
+        cascade="all, delete-orphan",
+        single_parent=True,
     )
     quizes = relationship(
-        "Quiz", secondary=quiz_teams, back_populates="teams_registered", cascade="all"
+        "Quiz", secondary=quiz_teams, back_populates="teams_registered"
     )
+
+
+class TeamAnswers(Base):
+
+    __tablename__ = "team_answers"
+    team_id = NotNull(Integer, ForeignKey("team.id"))
+    quiz_id = NotNull(Integer, ForeignKey("quiz.id"))
+    question_id = NotNull(Integer, ForeignKey("questions.id"))
+    answer = NotNull(String)
