@@ -38,3 +38,11 @@ class QuizEdit(BaseModel):
     quiz_name: str | None = None
     starts_at: datetime | None = None
     ends_at: datetime | None = None
+
+
+class QuizDisplay(BaseModel):
+    id: int
+    quiz_name: str
+    starts_at: datetime
+    ends_at: datetime | None = None
+    teams_registered: list[QuizTeam] | None = []

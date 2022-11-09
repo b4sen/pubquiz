@@ -6,7 +6,12 @@ from .quiz import router as quiz_router
 from .team import router as team_router
 
 router = APIRouter(prefix="/admin")
-router.include_router(quiz_router)
-router.include_router(question_router)
-router.include_router(team_router)
-router.include_router(member_router)
+router.include_router(quiz_router, tags=["admin quiz endpoints"])
+router.include_router(question_router, tags=["admin question endpoints"])
+router.include_router(team_router, tags=["admin team endpoints"])
+router.include_router(member_router, tags=["admin member endpoints"])
+
+
+@router.post("/register")
+def register_admin():
+    pass
