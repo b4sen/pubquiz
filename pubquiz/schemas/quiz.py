@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 from .question import Question
 from .member import MemberBase
@@ -45,4 +45,11 @@ class QuizDisplay(BaseModel):
     quiz_name: str
     starts_at: datetime
     ends_at: datetime | None = None
-    teams_registered: list[QuizTeam] | None = []
+    teams_registered: int = 0
+
+    @validator("teams_registered", pre=True)
+    def count_teams_registered(cls, v):
+        return len(v)
+
+    class Config:
+        orm_mode = True

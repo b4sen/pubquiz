@@ -9,7 +9,7 @@ from pubquiz.db.controllers import quiz as qc
 router = APIRouter(prefix="/quiz", tags=["quiz endpoints"])
 
 
-@router.get("/", response_model=list[schemas.QuizDisplay])
+@router.get("/", response_model=list[schemas.QuizDisplay] | None)
 def get_quizes(db: Session = Depends(get_db)):
     return qc.get_quizes(db)
 

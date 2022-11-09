@@ -1,4 +1,5 @@
 from collections import defaultdict
+
 from pydantic import BaseModel, Extra, validator
 
 from .member import MemberBase
@@ -23,6 +24,16 @@ class TeamAnswerUpdate(BaseModel):
     answer: str
 
 
+class Answer(BaseModel):
+    question_id: int
+    answer: str
+
+
+class TeamQuizAnswers(BaseModel):
+    quiz_id: int
+    answers: list[Answer] = []
+
+
 class Team(BaseModel):
     id: int
     team_name: str
@@ -30,12 +41,12 @@ class Team(BaseModel):
     hash: str
     members: list[MemberBase]
     quizes: list
-    answers: list[TeamAnswer] | None  # swagger shows schema before validation
+    answers: list[TeamQuizAnswers] | None  # swagger shows schema before validation
 
     class Config:
         orm_mode = True
 
-    @validator('answers', pre=False)
+    @validator("answers", pre=True)
     def group_keys(cls, v):
         res = defaultdict(list)
         for answer in v:
