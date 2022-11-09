@@ -1,7 +1,26 @@
-from pydantic import BaseModel, Extra
+from collections import defaultdict
+from pydantic import BaseModel, Extra, validator
 
 from .member import MemberBase
-from .quiz import Quiz
+
+
+class TeamCreate(BaseModel, extra=Extra.allow):
+    team_name: str
+    captain_name: str
+
+
+class TeamAnswer(BaseModel):
+    quiz_id: int
+    question_id: int
+    answer: str
+
+    class Config:
+        orm_mode = True
+
+
+class TeamAnswerUpdate(BaseModel):
+    answer_id: int
+    answer: str
 
 
 class Team(BaseModel):
@@ -11,18 +30,20 @@ class Team(BaseModel):
     hash: str
     members: list[MemberBase]
     quizes: list
+    answers: list[TeamAnswer] | None
 
     class Config:
         orm_mode = True
 
+    @validator('answers', pre=False)
+    def group_keys(cls, v):
+        res = defaultdict(list)
+        for answer in v:
+            quiz_id = answer.quiz_id
+            data = {"question_id": answer.question_id, "answer": answer.answer}
+            res[quiz_id].append(data)
+        out = []
+        for k, v in res.items():
+            out.append({"quiz_id": k, "answers": v})
+        return out
 
-class TeamCreate(BaseModel, extra=Extra.allow):
-    team_name: str
-    captain_name: str
-
-
-class TeamAnswer(BaseModel):
-    team_id: int
-    quiz_id: int
-    question_id: int
-    answer: str

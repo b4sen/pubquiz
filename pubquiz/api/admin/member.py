@@ -1,6 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-router = APIRouter(prefix="/member")
+from pubquiz.dependencies.auth import get_current_user
+
+router = APIRouter(prefix="/member", dependencies=[Depends(get_current_user)])
 
 
 @router.get("/")

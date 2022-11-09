@@ -5,8 +5,9 @@ from pubquiz import schemas
 from pubquiz.db.controllers import question as question_c
 from pubquiz.db.controllers import quiz as qc
 from pubquiz.dependencies import get_db
+from pubquiz.dependencies.auth import get_current_user
 
-router = APIRouter(prefix="/quiz")
+router = APIRouter(prefix="/quiz", dependencies=[Depends(get_current_user)])
 
 
 @router.get("/", response_model=list[schemas.Quiz | None])

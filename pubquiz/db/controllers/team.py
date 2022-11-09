@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
 from pubquiz import schemas
-from pubquiz.db.models import Team, Member
+from pubquiz.db.models import Team, Member, TeamAnswers
 
 
 def get_team(db: Session, hash: str):
@@ -78,3 +78,24 @@ def remove_member(db: Session, team_id: int, member_id: int):
     db.commit()
     db.refresh(db_team)
     return db_team
+
+
+def add_answer(db: Session, answer: schemas.TeamAnswer, team_hash: str):
+    db_team = db.query(Team).where(Team.hash == team_hash).first()
+    data = answer.dict()
+    data["team_id"] = db_team.id
+    db_answer = TeamAnswers(**data)
+    db_team.answers.append(db_answer)
+    db.add(db_team)
+    db.commit()
+    db.refresh(db_team)
+    return db_team
+
+
+def modify_answer(db: Session, answer: schemas.TeamAnswerUpdate):
+    db_answer = db.query(TeamAnswers).get(answer.answer_id)
+    db_answer.answer = answer.answer
+    db.add(db_answer)
+    db.commit()
+    db.refresh(db_answer)
+    return db_answer

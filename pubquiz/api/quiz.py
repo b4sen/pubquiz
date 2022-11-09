@@ -22,4 +22,3 @@ def get_quiz_by_id(quiz_id: int, db: Session = Depends(get_db)):
 @router.post("/{quiz_id}/register/{team_hash}")
 def register_team(quiz_id: int, team_hash: str, db: Session = Depends(get_db)):
     return qc.register_team(db, quiz_id, team_hash)
-

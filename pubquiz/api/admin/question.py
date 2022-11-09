@@ -4,8 +4,9 @@ from sqlalchemy.orm import Session
 from pubquiz import schemas
 from pubquiz.db.controllers import question as qc
 from pubquiz.dependencies import get_db
+from pubquiz.dependencies.auth import get_current_user
 
-router = APIRouter(prefix="/question")
+router = APIRouter(prefix="/question", dependencies=[Depends(get_current_user)])
 
 
 @router.get("/{question_id}", response_model=schemas.Question | None)

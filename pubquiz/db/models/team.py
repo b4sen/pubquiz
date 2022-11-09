@@ -29,6 +29,7 @@ class Team(Base):
     quizes = relationship(
         "Quiz", secondary=quiz_teams, back_populates="teams_registered"
     )
+    answers = relationship("TeamAnswers", single_parent=True, cascade="all, delete-orphan")
 
 
 class TeamAnswers(Base):
