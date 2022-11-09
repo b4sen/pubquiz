@@ -30,7 +30,7 @@ class Team(BaseModel):
     hash: str
     members: list[MemberBase]
     quizes: list
-    answers: list[TeamAnswer] | None
+    answers: list[TeamAnswer] | None  # swagger shows schema before validation
 
     class Config:
         orm_mode = True
@@ -46,4 +46,3 @@ class Team(BaseModel):
         for k, v in res.items():
             out.append({"quiz_id": k, "answers": v})
         return out
-
