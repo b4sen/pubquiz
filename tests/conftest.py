@@ -53,3 +53,8 @@ def client():
 def admin():
     app.dependency_overrides[get_current_user] = skip_auth
     return TestClient(app)
+
+
+@pytest.fixture
+def _db():
+    return TestSessionLocal()

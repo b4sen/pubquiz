@@ -11,8 +11,10 @@ class Question(BaseModel):
         orm_mode = True
 
 
-class QuestionCreate(Question):
-    pass
+class QuestionCreate(BaseModel):
+    title: str
+    answer: str | int
+    img_url: str | None = None
 
 
 class QuestionUpdate(BaseModel):
