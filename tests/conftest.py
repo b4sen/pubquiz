@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from pubquiz.server import app
 from pubquiz.db.models import Base
 from pubquiz.dependencies import get_db
+from pubquiz.dependencies.auth import get_current_user
 
 
 engine = create_engine(
@@ -43,11 +44,12 @@ def seed_db(test_db):
 @pytest.fixture
 def client():
     # reset dependency override dictionary
-    # app.dependency_overrides[get_current_user] = get_current_user
+    # can't deepcopy app
+    app.dependency_overrides[get_current_user] = get_current_user
     return TestClient(app)
 
 
 @pytest.fixture
 def admin():
-    # app.dependency_overrides[get_current_user] = skip_auth
+    app.dependency_overrides[get_current_user] = skip_auth
     return TestClient(app)

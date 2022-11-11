@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, inspect
 from sqlalchemy.orm import as_declarative
 
 

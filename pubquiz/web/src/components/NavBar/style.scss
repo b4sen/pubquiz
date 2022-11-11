@@ -10,7 +10,26 @@
   justify-content: center;
   color: white;
 
-  div:last-of-type {
-    margin-left: auto;
+  .nav-brand {
+    width: 50%;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .empty {
+    width: 20%;
+    height: 4rem;
+  }
+  .nav-menu {
+    width: 20%;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    .nav-item {
+      padding: 1.2rem;
+    }
   }
 }
