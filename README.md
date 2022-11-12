@@ -1,7 +1,8 @@
 ## Pubquiz
 
-This project is still work in progress!
+This project is still work in progress and it's not intended to be published in production! I'm building it out of curiosity and fun.
 The API is more or less done. Built with FastAPI and React.
+
 
 ## Installation
 
